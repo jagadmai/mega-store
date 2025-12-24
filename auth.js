@@ -22,6 +22,20 @@ function login() {
     return;
   }
 
+  // ✅ SET LOGIN STATE FIRST
+  localStorage.setItem("loggedIn", "true");
+
+  // ✅ FORCE CLEAN REDIRECT
+  window.location.replace("index.html");
+}
+
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user || user.email !== email || user.password !== password) {
+    alert("Invalid login");
+    return;
+  }
+
   localStorage.setItem("loggedIn", "true");
   location.href = "index.html";
-}
