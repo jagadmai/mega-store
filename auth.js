@@ -18,6 +18,8 @@ function signup() {
 }
 
 function login() {
+    localStorage.setItem("loggedIn", "true");
+
   const email = emailVal();
   const pass = passVal();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -29,6 +31,8 @@ function login() {
 
   localStorage.setItem("loggedIn", "true");
   location.replace("index.html");
+  location.href = "index.html";
+
 }
 
 const emailVal = () => document.getElementById("email").value.trim();
