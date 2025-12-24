@@ -1,13 +1,12 @@
 const productsEl = document.getElementById("products");
-const categoriesEl = document.getElementById("categories");
-const searchEl = document.getElementById("search");
-const modal = document.getElementById("modal");
+const catEl = document.getElementById("categories");
 const cartCount = document.getElementById("cartCount");
+const search = document.getElementById("search");
 
 let PRODUCTS = [];
 let CART = JSON.parse(localStorage.getItem("cart") || "[]");
 
-updateCartCount();
+updateCart();
 
 fetch("https://fakestoreapi.com/products")
   .then(r => r.json())
@@ -15,70 +14,72 @@ fetch("https://fakestoreapi.com/products")
     PRODUCTS = data;
     renderCategories();
     renderProducts(data);
+    loadProductPage();
   });
 
 function renderProducts(list) {
+  if (!productsEl) return;
   productsEl.innerHTML = "";
   list.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "product";
-    card.innerHTML = `
+    const c = document.createElement("div");
+    c.className = "card";
+    c.innerHTML = `
       <img src="${p.image}">
-      <h3>${p.title}</h3>
+      <h4>${p.title}</h4>
       <div class="price">$${p.price}</div>
-      <button>Add to Cart</button>
+      <div class="ui-btn">Add to Cart</div>
     `;
-
-    card.querySelector("button").onclick = () => addToCart(p);
-    card.onclick = e => {
-      if (e.target.tagName !== "BUTTON") showModal(p);
-    };
-
-    productsEl.appendChild(card);
+    c.onclick = () => location.href = `product.html?id=${p.id}`;
+    productsEl.appendChild(c);
   });
 }
 
 function renderCategories() {
   const cats = ["All", ...new Set(PRODUCTS.map(p => p.category))];
-  categoriesEl.innerHTML = "";
+  catEl.innerHTML = "";
   cats.forEach(c => {
-    const btn = document.createElement("button");
-    btn.textContent = c;
-    btn.onclick = () => {
-      const filtered = c === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === c);
-      renderProducts(filtered);
+    const d = document.createElement("div");
+    d.textContent = c;
+    d.onclick = () => {
+      renderProducts(c === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === c));
     };
-    categoriesEl.appendChild(btn);
+    catEl.appendChild(d);
   });
 }
 
-searchEl.oninput = () => {
-  const val = searchEl.value.toLowerCase();
-  renderProducts(PRODUCTS.filter(p => p.title.toLowerCase().includes(val)));
-};
-
-function addToCart(p) {
-  CART.push(p);
-  localStorage.setItem("cart", JSON.stringify(CART));
-  updateCartCount();
+if (search) {
+  search.oninput = () => {
+    const v = search.value.toLowerCase();
+    renderProducts(PRODUCTS.filter(p => p.title.toLowerCase().includes(v)));
+  };
 }
 
-function updateCartCount() {
-  cartCount.textContent = CART.length;
-}
+function loadProductPage() {
+  const box = document.getElementById("productPage");
+  if (!box) return;
 
-function showModal(p) {
-  modal.classList.remove("hidden");
-  modal.innerHTML = `
-    <div>
+  const id = new URLSearchParams(location.search).get("id");
+  const p = PRODUCTS.find(x => x.id == id);
+  if (!p) return;
+
+  box.innerHTML = `
+    <div class="card">
+      <img src="${p.image}">
       <h2>${p.title}</h2>
-      <img src="${p.image}" style="width:200px">
       <p>${p.description}</p>
-      <button onclick="closeModal()">Close</button>
+      <div class="price">$${p.price}</div>
+      <div class="ui-btn" onclick="addToCart(${p.id})">Add to Cart</div>
     </div>
   `;
 }
 
-function closeModal() {
-  modal.classList.add("hidden");
+function addToCart(id) {
+  const p = PRODUCTS.find(x => x.id == id);
+  CART.push(p);
+  localStorage.setItem("cart", JSON.stringify(CART));
+  updateCart();
+}
+
+function updateCart() {
+  if (cartCount) cartCount.textContent = CART.length;
 }

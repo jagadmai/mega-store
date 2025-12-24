@@ -1,41 +1,35 @@
-const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 const isLoginPage = location.pathname.includes("login.html");
 
-if (!isLoggedIn && !isLoginPage) {
+if (!localStorage.getItem("loggedIn") && !isLoginPage) {
   location.replace("login.html");
 }
 
-if (isLoggedIn && isLoginPage) {
+if (localStorage.getItem("loggedIn") && isLoginPage) {
   location.replace("index.html");
 }
 
 function signup() {
-  const email = emailInput();
-  const pass = passInput();
-
+  const email = emailVal();
+  const pass = passVal();
   if (!email || !pass) return alert("Fill all fields");
 
   localStorage.setItem("user", JSON.stringify({ email, pass }));
-  alert("Account created. Login now.");
+  alert("Account created");
 }
 
 function login() {
-  const email = emailInput();
-  const pass = passInput();
-
+  const email = emailVal();
+  const pass = passVal();
   const user = JSON.parse(localStorage.getItem("user"));
+
   if (!user || user.email !== email || user.pass !== pass) {
-    return alert("Invalid credentials");
+    alert("Wrong credentials");
+    return;
   }
 
   localStorage.setItem("loggedIn", "true");
   location.replace("index.html");
 }
 
-function emailInput() {
-  return document.getElementById("email").value.trim();
-}
-
-function passInput() {
-  return document.getElementById("password").value.trim();
-}
+const emailVal = () => document.getElementById("email").value.trim();
+const passVal = () => document.getElementById("password").value.trim();
