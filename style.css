@@ -113,3 +113,42 @@ nav button:hover {
 .add:hover {
   background: #f7ca00;
 }
+/* AUTH PAGES */
+.auth {
+  background: linear-gradient(120deg, #232f3e, #131921);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-box {
+  background: white;
+  padding: 30px;
+  width: 320px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-box h2 {
+  margin-bottom: 10px;
+}
+
+.auth-box input {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.auth-box button {
+  padding: 10px;
+  background: #ffd814;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.auth-box button.secondary {
+  background: #eaeaea;
+}
