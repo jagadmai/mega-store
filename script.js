@@ -1,20 +1,24 @@
-const productsDiv = document.getElementById("products");
-const categoriesDiv = document.getElementById("categories");
-const searchInput = document.getElementById("search");
+const productsEl = document.getElementById("products");
+const categoriesEl = document.getElementById("categories");
+const searchEl = document.getElementById("search");
+const modal = document.getElementById("modal");
+const cartCount = document.getElementById("cartCount");
 
-let ALL_PRODUCTS = [];
-let CURRENT_CATEGORY = "all";
+let PRODUCTS = [];
+let CART = JSON.parse(localStorage.getItem("cart") || "[]");
+
+updateCartCount();
 
 fetch("https://fakestoreapi.com/products")
-  .then(res => res.json())
+  .then(r => r.json())
   .then(data => {
-    ALL_PRODUCTS = data;
-    renderCategories(data);
+    PRODUCTS = data;
+    renderCategories();
     renderProducts(data);
   });
 
 function renderProducts(list) {
-  productsDiv.innerHTML = "";
+  productsEl.innerHTML = "";
   list.forEach(p => {
     const card = document.createElement("div");
     card.className = "product";
@@ -24,39 +28,57 @@ function renderProducts(list) {
       <div class="price">$${p.price}</div>
       <button>Add to Cart</button>
     `;
-    productsDiv.appendChild(card);
-  });
-}
 
-function renderCategories(products) {
-  const cats = ["all", ...new Set(products.map(p => p.category))];
-  categoriesDiv.innerHTML = "";
-  cats.forEach(cat => {
-    const btn = document.createElement("button");
-    btn.textContent = cat.toUpperCase();
-    btn.onclick = () => {
-      CURRENT_CATEGORY = cat;
-      filter();
+    card.querySelector("button").onclick = () => addToCart(p);
+    card.onclick = e => {
+      if (e.target.tagName !== "BUTTON") showModal(p);
     };
-    categoriesDiv.appendChild(btn);
+
+    productsEl.appendChild(card);
   });
 }
 
-function filter() {
-  let filtered = ALL_PRODUCTS;
-  const value = searchInput.value.toLowerCase();
-
-  if (CURRENT_CATEGORY !== "all") {
-    filtered = filtered.filter(p => p.category === CURRENT_CATEGORY);
-  }
-
-  if (value) {
-    filtered = filtered.filter(p =>
-      p.title.toLowerCase().includes(value)
-    );
-  }
-
-  renderProducts(filtered);
+function renderCategories() {
+  const cats = ["All", ...new Set(PRODUCTS.map(p => p.category))];
+  categoriesEl.innerHTML = "";
+  cats.forEach(c => {
+    const btn = document.createElement("button");
+    btn.textContent = c;
+    btn.onclick = () => {
+      const filtered = c === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === c);
+      renderProducts(filtered);
+    };
+    categoriesEl.appendChild(btn);
+  });
 }
 
-searchInput.addEventListener("input", filter);
+searchEl.oninput = () => {
+  const val = searchEl.value.toLowerCase();
+  renderProducts(PRODUCTS.filter(p => p.title.toLowerCase().includes(val)));
+};
+
+function addToCart(p) {
+  CART.push(p);
+  localStorage.setItem("cart", JSON.stringify(CART));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  cartCount.textContent = CART.length;
+}
+
+function showModal(p) {
+  modal.classList.remove("hidden");
+  modal.innerHTML = `
+    <div>
+      <h2>${p.title}</h2>
+      <img src="${p.image}" style="width:200px">
+      <p>${p.description}</p>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  `;
+}
+
+function closeModal() {
+  modal.classList.add("hidden");
+}
