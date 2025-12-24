@@ -255,3 +255,10 @@ function initOrdersPage() {
     DOM.orders.appendChild(el);
   });
 }
+document.getElementById("cartCount").textContent =
+  JSON.parse(localStorage.getItem("cart") || "[]").length;
+function filterByCategory(cat) {
+  if (cat === "All") {
+    renderProducts(PRODUCTS);
+  }
+}
