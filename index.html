@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login – Shopverse</title>
+  <title>Shopverse</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="auth">
+<body>
 
-  <div class="auth-box">
-    <h2>Sign in</h2>
+<header>
+  <h1>Shopverse</h1>
+  <input id="search" placeholder="Search products">
+</header>
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
+<nav id="categories"></nav>
 
-    <button onclick="login()">Login</button>
-
-    <p>New here?</p>
-    <button class="secondary" onclick="signup()">Create account</button>
-  </div>
+<div id="products"></div>
 
 <script src="script.js"></script>
 </body>
