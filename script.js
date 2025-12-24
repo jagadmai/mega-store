@@ -1,3 +1,6 @@
+if (localStorage.getItem("loggedIn") !== "true") {
+  location.href = "login.html";
+}
 const productsDiv = document.getElementById("products");
 const categoriesDiv = document.getElementById("categories");
 const searchInput = document.getElementById("search");
