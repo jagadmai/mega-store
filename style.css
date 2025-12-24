@@ -110,3 +110,22 @@ main {
   flex-direction: column;
   gap: 10px;
 }
+.cart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.cart-item {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
+}
+
+.cart-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: contain;
+}
