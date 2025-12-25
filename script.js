@@ -262,3 +262,7 @@ function filterByCategory(cat) {
     renderProducts(PRODUCTS);
   }
 }
+if (localStorage.getItem("loggedIn") === "true") {
+  const hello = document.getElementById("helloText");
+  if (hello) hello.textContent = "Hello, Pranav";
+}
