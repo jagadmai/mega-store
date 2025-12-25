@@ -266,3 +266,6 @@ if (localStorage.getItem("loggedIn") === "true") {
   const hello = document.getElementById("helloText");
   if (hello) hello.textContent = "Hello, Pranav";
 }
+function goToCart() {
+  window.location.href = "cart.html";
+}
