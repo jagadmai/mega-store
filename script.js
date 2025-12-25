@@ -269,3 +269,10 @@ if (localStorage.getItem("loggedIn") === "true") {
 function goToCart() {
   window.location.href = "cart.html";
 }
+(function fixCartText() {
+  const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartEl = document.getElementById("cartCount");
+  if (cartEl) {
+    cartEl.textContent = cartData.length;
+  }
+})();
