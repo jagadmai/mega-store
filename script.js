@@ -1,3 +1,5 @@
+if (!document.getElementById("products")) return;
+
 /* =====================================================
    MEGASTORE — ADVANCED CLIENT ENGINE (NO RECOMMENDATIONS)
    ===================================================== */
