@@ -216,3 +216,37 @@ main {
 .cat:hover {
   background: rgba(255,255,255,0.2);
 }
+/* TOP BAR */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  background: #1b1f23;
+  color: white;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.account {
+  cursor: pointer;
+  line-height: 1.1;
+}
+
+.account .small {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.account .big {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.account:hover {
+  text-decoration: underline;
+}

@@ -5,7 +5,13 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="loginBtn" onclick="location.href='login.html'" style="cursor:pointer;font-weight:600;">Login</div>
+  <div class="top-bar">
+  <div class="logo">Shoply</div>
+  <div class="account" onclick="location.href='login.html'">
+    <span class="small">Hello, sign in</span>
+    <span class="big">Account & Lists</span>
+  </div>
+</div>
 
 <div class="category-bar">
   <div class="cat" onclick="filterByCategory('All')">All</div>
