@@ -23,9 +23,6 @@
 <script>
   console.log(JSON.parse(localStorage.getItem("cart")));
 </script>
-
-</body>
-</html>
 <script>
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const container = document.getElementById("cartItems");
@@ -36,3 +33,6 @@
     container.appendChild(div);
   });
 </script>
+
+</body>
+</html>
