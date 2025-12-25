@@ -24,15 +24,20 @@
   console.log(JSON.parse(localStorage.getItem("cart")));
 </script>
 <script>
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const container = document.getElementById("cartItems");
+  window.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cartItems");
 
-  cart.forEach(item => {
-    const div = document.createElement("div");
-    div.textContent = item.title + " - $" + item.price;
-    container.appendChild(div);
+    container.innerHTML = "";
+
+    cart.forEach(item => {
+      const div = document.createElement("div");
+      div.textContent = item.title + " - $" + item.price;
+      container.appendChild(div);
+    });
   });
 </script>
+
 
 </body>
 </html>
