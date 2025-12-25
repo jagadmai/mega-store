@@ -1,3 +1,4 @@
+alert("script loaded");
 if (!document.getElementById("products")) return;
 
 /* =====================================================
